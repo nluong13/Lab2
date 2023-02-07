@@ -45,17 +45,16 @@ Software:
 // setup pin configurations
 void configPins() {
     // output external LEDs
-    FIO0DIR |= (1<<1) | (1<<2) | (1<<3) | (1<<5) | (1<<6) | (1<<7) ; // 7 red leds
-    FIO1DIR |= (1<<1) | (1<<2) | (1<<3) | (1<<5); // 5 grn leds
-    FIO2DIR |= (1<<1) | (1<<2) | (1<<3); // 3 blue leds
+    FIO2DIR |= (1<<0) | (1<<1) | (1<<2) | (1<<3); // g5, b1, b2, b3
+    FIO0DIR |= (1<<4) | (1<<5) | (1<<10) | (1<<11) | (1<<9) | (1<<8) | (1<<7) | (1<<6) | (1<<0) | (1<<1) | (1<<18); // g1, g2, g3, g4, r1, r2, r3, r4, r5, r6, r7
+    
 
     // read input switches
-    FIO0DIR &= ~(1<<10) & ~(1<<11); // blue sw1, blue sw2
-    FIO1DIR &= ~(1<<10) & ~(1<<11); // grn sw1, grn sw2
-    FIO2DIR &= ~(1<<5) & ~(1<<6); // red sw1, red sw2
+    FIO0DIR &= ~(1<<23) & ~(1<<24) & ~(1<<25) & ~(1<<2) & ~(1<<3); // bsw1, bsw2, rsw1, rsw2
+    FIO1DIR &= & ~(1<<30) & ~(1<<31); // gsw 1, gsw 2
 
     // configure PINMODE - pull down (active high)
-    /* get PINMODE register & bit: 
+    /* get PINMODE register & bit:
         - Multiply port and bit numbers by 2
         - If the resulting bit number exceeds 31, subtract 32 from it 
           and add 1 to the PINMODE number
@@ -66,5 +65,4 @@ void configPins() {
     PINMODE3 |= (1<<5) | (1<<6); // grn sw2 (port 1, bits 22-23)
     PINMODE4 |= (1<<10) | (1<<11); // blue sw1 (port 2, bits 10-11)
     PINMODE4 |= (1<<12) | (1<<13); // blue sw2 (port 2, bits 12-13)
-
 }
