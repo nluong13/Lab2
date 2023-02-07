@@ -39,7 +39,69 @@ Software:
 #define PINMODE3 (*(volatile unsigned int *)0x4002c04c) 
 #define PINMODE4 (*(volatile unsigned int *)0x4002c050) 
 
+static inline void writeBLED1(int state) {
+    if (state == 1) FIO0PIN |= (1<<1);
+    else FIO0PIN &= ~(1<<1);
+}
+static inline void writeBLED2(int state) {
+    if (state == 1) FIO0PIN |= (1<<2);
+    else FIO0PIN &= ~(1<<2);
+}
+static inline void writeBLED3(int state) {
+    if (state == 1) FIO2PIN |= (1<<3);
+    else FIO2PIN &= ~(1<<3);
+}
+static inline void writeGLED1(int state) {
+    if (state == 1) FIO2PIN |= (1<<4);
+    else FIO2PIN &= ~(1<<3);
+}
+static inline void writeGLED2(int state) {
+    if (state == 1) FIO0PIN |= (1<<24);
+    else FIO0PIN &= ~(1<<24);
+}
+static inline void writeGLED3(int state) {
+    if (state == 1) FIO0PIN |= (1<<25);
+    else FIO0PIN &= ~(1<<25);
+}
+static inline void writeGLED4(int state) {
+    if (state == 1) FIO2PIN |= (1<<2);
+    else FIO2PIN &= ~(1<<2);
+}
+static inline void writeGLED5(int state) {
+    if (state == 1) FIO2PIN |= (1<<3);
+    else FIO2PIN &= ~(1<<3);
+}static inline void writeRLED1(int state) {
+    if (state == 1) FIO0PIN |= (1<<24);
+    else FIO0PIN &= ~(1<<24);
+}
+static inline void writeRLED2(int state) {
+    if (state == 1) FIO0PIN |= (1<<25);
+    else FIO0PIN &= ~(1<<25);
+}
+static inline void writeRLED3(int state) {
+    if (state == 1) FIO2PIN |= (1<<2);
+    else FIO2PIN &= ~(1<<2);
+}
+static inline void writeRLED4(int state) {
+    if (state == 1) FIO2PIN |= (1<<3);
+    else FIO2PIN &= ~(1<<3);
+}static inline void writeRLED5(int state) {
+    if (state == 1) FIO0PIN |= (1<<24);
+    else FIO0PIN &= ~(1<<24);
+}
+static inline void writeRLED6(int state) {
+    if (state == 1) FIO0PIN |= (1<<25);
+    else FIO0PIN &= ~(1<<25);
+}
+static inline void writeRLED7(int state) {
+    if (state == 1) FIO2PIN |= (1<<2);
+    else FIO2PIN &= ~(1<<2);
+}
 
+void startCon(){
+
+
+}
 // setup pin configurations
 void configPins() {
     // output external LEDs
@@ -107,11 +169,16 @@ if (readRSW2() == 1) {
 
 int  main() {
 
+    int pos = 0;  // position of the game
+    int rsw = 0;
+    int gsw = 0;
+    int prevRsw = rsw;
+    int prevGsw = gsw;
 
   configPins();
     
     // rope position at start of game (LED2, LED3 ON)
-    startPos();
+    startCon();
     
     do {
         // read switch states once per loop
