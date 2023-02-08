@@ -39,6 +39,13 @@ Software:
 #define PINMODE3 (*(volatile unsigned int *)0x4002c04c) 
 #define PINMODE4 (*(volatile unsigned int *)0x4002c050) 
 
+// wait function
+void wait(float seconds) {
+    volatile int count = seconds * 21.33e6;
+    while (count > 0) count--;
+}
+
+// write external LED functions
 static inline void writeBLED1(int state) {
     if (state == 1) FIO0PIN |= (1<<1);
     else FIO0PIN &= ~(1<<1);
@@ -98,10 +105,45 @@ static inline void writeRLED7(int state) {
     else FIO2PIN &= ~(1<<2);
 }
 
-void startCon(){
-
-
+// read switch functions
+static inline int readBSW1(void) {
+    return((FIO0PIN >> 24) & 1);
 }
+static inline int readBSW2(void) {
+    return((FIO0PIN >> 25) & 1);
+}
+static inline int readGSW1(void) {
+    return((FIO1PIN >> 30) & 1);
+}
+static inline int readGSW2(void) {
+    return((FIO1PIN >> 32) & 1);
+}
+static inline int readRSW1(void) {
+    return((FIO0PIN >> 26) & 1);
+}
+static inline int readRSW2(void) {
+    return((FIO0PIN >> 2) & 1);
+}
+
+// starting game configuration function - all LEDs ON
+void startCon() {
+    writeBLED1(1); wait(0.01);
+    writeBLED2(1); wait(0.01);
+    writeBLED3(1); wait(0.01);
+    writeGLED1(1); wait(0.01);
+    writeGLED2(1); wait(0.01);
+    writeGLED3(1); wait(0.01);
+    writeGLED4(1); wait(0.01);
+    writeGLED5(1); wait(0.01);
+    writeRLED1(1); wait(0.01);
+    writeRLED2(1); wait(0.01);
+    writeRLED3(1); wait(0.01);
+    writeRLED4(1); wait(0.01);
+    writeRLED5(1); wait(0.01);
+    writeRLED6(1); wait(0.01);
+    writeRLED7(1); wait(0.01);
+}
+
 // setup pin configurations
 void configPins() {
     // output external LEDs
@@ -128,63 +170,40 @@ void configPins() {
     PINMODE4 |= (1<<12) | (1<<13); // blue sw2 (port 2, bits 12-13)
 }
 
-// read switch functions
-static inline int readBSW1(void) {
-    return((FIO0PIN >> 24) & 1);
-}
-static inline int readBSW2(void) {
-    return((FIO0PIN >> 25) & 1);
-}
-static inline int readGSW1(void) {
-    return((FIO1PIN >> 30) & 1);
-}
-static inline int readGSW2(void) {
-    return((FIO1PIN >> 32) & 1);
-}
-static inline int readRSW1(void) {
-    return((FIO0PIN >> 26) & 1);
-}
-static inline int readRSW2(void) {
-    return((FIO0PIN >> 2) & 1);
-}
 
-if (readBSW1() == 1) {
-    int count++;
-}
-if (readBSW2() == 1) {
-    int count++;
-}
-if (readGSW1() == 1) {
-    int count++;
-}
-if (readGSW2() == 1) {
-    int count++;
-}
-if (readRSW1() == 1) {
-    int count++;
-}
-if (readRSW2() == 1) {
-    int count++;
-}
 
 int  main() {
+    int countBlu = 0;  // count of blue switch presses
+    int countGrn = 0; // count of green switch presses
+    int countRed = 0; // count of red switch presses
+    int bsw1 = 0;
+    int bsw2 = 0;
+    int gsw1 = 0;
+    int gsw2 = 0;
+    int rsw1 = 0;
+    int rsw2 = 0;
+    int prevBsw1 = bsw1;
+    int prevBsw2 = bsw2;
+    int prevGsw1 = gsw1;
+    int prevGsw2 = gsw2;
+    int prevRsw1 = rsw1;
+    int prevRsw2 = rsw2;
 
-    int pos = 0;  // position of the game
-    int rsw = 0;
-    int gsw = 0;
-    int prevRsw = rsw;
-    int prevGsw = gsw;
-
-  configPins();
+    // set up input/output pins
+    configPins();
     
-    // rope position at start of game (LED2, LED3 ON)
+    // start of game (all LEDs ON)
     startCon();
     
     do {
         // read switch states once per loop
-        rsw = readRSW();
-        gsw = readGSW();
-        
+        bsw1 = readBSW1();
+        bsw2 = readBSW2();
+        gsw1 = readGSW1();
+        gsw2 = readGSW2();
+        rsw1 = readRSW1();
+        rsw2 = readRSW2();
+
         if (rsw != prevRsw) {
             pos--;
             wait(0.02);
@@ -212,4 +231,21 @@ int  main() {
 }
 
 
-
+if (readBSW1() == 1) {
+    int count++;
+}
+if (readBSW2() == 1) {
+    int count++;
+}
+if (readGSW1() == 1) {
+    int count++;
+}
+if (readGSW2() == 1) {
+    int count++;
+}
+if (readRSW1() == 1) {
+    int count++;
+}
+if (readRSW2() == 1) {
+    int count++;
+}
