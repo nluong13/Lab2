@@ -160,7 +160,7 @@ void configPins() {
         - If the resulting bit number exceeds 31, subtract 32 from it 
           and add 1 to the PINMODE number
     */
-   // FIX THIS
+   // FIX
     PINMODE1 |= (1<<5) | (1<<6); // red sw1 (port 0, bits 20-21)
     PINMODE1 |= (1<<7) | (1<<8); // red sw2 (port 0, bits 22-23)
     PINMODE3 |= (1<<5) | (1<<6); // grn sw1 (port 1, bits 20-21)
@@ -208,7 +208,7 @@ int  main() {
         rsw1 = readRSW1();
         rsw2 = readRSW2();
 
-        // FROM HW6
+        /* FROM HW6
         if (rsw != prevRsw) {
             pos--;
             wait(0.02);
@@ -217,30 +217,33 @@ int  main() {
             pos++;
             wait(0.02);
         }
+        */
 
         // when switch is pressed, increment count
         if (bsw1 == 1) {
             countBlu++; wait(0.02);
-            for (countBlu = 0; countBlu < 4; ) {
+            writeBLED1(0);
+            if (countBlu > maxBlu){
 
             }
         }
         if (bsw2 == 1) {
-            int countBlu++; wait(0.02);
+            countBlu++; wait(0.02);
         }
         if (gsw1 == 1) {
-            int countGrn++; wait(0.02);
+            countGrn++; wait(0.02);
         }
         if (gsw2 == 1) {
-            int countGrn++; wait(0.02);
+            countGrn++; wait(0.02);
         }
         if (rsw1 == 1) {
-            int countRed++; wait(0.02);
+            countRed++; wait(0.02);
         }
         if (rsw2 == 1) {
-            int countRed++; wait(0.02);
+            countRed++; wait(0.02);
         }
         
+        /* HW 6
         switch (pos) {
             case -3: rPos3(); break;
             case -2: rPos2(); break;
@@ -250,7 +253,8 @@ int  main() {
             case 2: gPos2(); break;
             case 3: gPos3(); break;
         }
-        
+        */
+
         // update previous switch states
         prevBsw1 = bsw1;
         prevBsw2 = bsw2;
@@ -260,7 +264,7 @@ int  main() {
         prevRsw2 = rsw2;
 
         totalCount++;
-    } while(pos >= 0 && pos <= maxTotal);
+    } while(totalCount >= 0 && totalCount <= maxTotal);
 
 }
 
