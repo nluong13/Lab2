@@ -160,13 +160,12 @@ void configPins() {
         - If the resulting bit number exceeds 31, subtract 32 from it 
           and add 1 to the PINMODE number
     */
-   // FIX
-    PINMODE1 |= (1<<5) | (1<<6); // red sw1 (port 0, bits 20-21)
-    PINMODE1 |= (1<<7) | (1<<8); // red sw2 (port 0, bits 22-23)
-    PINMODE3 |= (1<<5) | (1<<6); // grn sw1 (port 1, bits 20-21)
-    PINMODE3 |= (1<<5) | (1<<6); // grn sw2 (port 1, bits 22-23)
-    PINMODE4 |= (1<<10) | (1<<11); // blue sw1 (port 2, bits 10-11)
-    PINMODE4 |= (1<<12) | (1<<13); // blue sw2 (port 2, bits 12-13)
+    PINMODE0 |= (1<<10) | (1<<11); // blue sw1 (port 0, bits 16-17)
+    PINMODE0 |= (1<<12) | (1<<13); // blue sw2 (port 0, bits 18-19)
+    PINMODE3 |= (1<<28) | (1<<29); // grn sw1 (port 1, bits 28-29)
+    PINMODE3 |= (1<<30) | (1<<31); // grn sw2 (port 1, bits 30-31)
+    PINMODE1 |= (1<<20) | (1<<21); // red sw1 (port 0, bits 20-21)
+    PINMODE0 |= (1<<4) | (1<<5); // red sw2 (port 0, bits 4-5)
 }
 
 
