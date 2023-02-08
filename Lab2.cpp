@@ -150,7 +150,6 @@ void configPins() {
     FIO2DIR |= (1<<0) | (1<<1) | (1<<2) | (1<<3); // g5, b1, b2, b3
     FIO0DIR |= (1<<4) | (1<<5) | (1<<10) | (1<<11) | (1<<9) | (1<<8) | (1<<7) | (1<<6) | (1<<0) | (1<<1) | (1<<18); // g1, g2, g3, g4, r1, r2, r3, r4, r5, r6, r7
     
-
     // read input switches
     FIO0DIR &= ~(1<<24) & ~(1<<25) & ~(1<<26) & ~(1<<2); // bsw1, bsw2, rsw1, rsw2
     FIO1DIR &= ~(1<<30) & ~(1<<31); // gsw 1, gsw 2
@@ -176,6 +175,11 @@ int  main() {
     int countBlu = 0;  // count of blue switch presses
     int countGrn = 0; // count of green switch presses
     int countRed = 0; // count of red switch presses
+    int totalCount = 0; // total count of switch presses
+    int maxBlu = 3;
+    int maxGrn = 5;
+    int maxRed = 7;
+    int maxTotal = 15;
     int bsw1 = 0;
     int bsw2 = 0;
     int gsw1 = 0;
@@ -204,14 +208,37 @@ int  main() {
         rsw1 = readRSW1();
         rsw2 = readRSW2();
 
+        // FROM HW6
         if (rsw != prevRsw) {
             pos--;
             wait(0.02);
         }
-        
         if (gsw != prevGsw) {
             pos++;
             wait(0.02);
+        }
+
+        // when switch is pressed, increment count
+        if (bsw1 == 1) {
+            countBlu++; wait(0.02);
+            for (countBlu = 0; countBlu < 4; ) {
+
+            }
+        }
+        if (bsw2 == 1) {
+            int countBlu++; wait(0.02);
+        }
+        if (gsw1 == 1) {
+            int countGrn++; wait(0.02);
+        }
+        if (gsw2 == 1) {
+            int countGrn++; wait(0.02);
+        }
+        if (rsw1 == 1) {
+            int countRed++; wait(0.02);
+        }
+        if (rsw2 == 1) {
+            int countRed++; wait(0.02);
         }
         
         switch (pos) {
@@ -224,28 +251,18 @@ int  main() {
             case 3: gPos3(); break;
         }
         
-        prevRsw = rsw;
-        prevGsw = gsw;
-    } while(pos >= -2 && pos <= 2);
+        // update previous switch states
+        prevBsw1 = bsw1;
+        prevBsw2 = bsw2;
+        prevGsw1 = gsw1;
+        prevGsw2 = gsw2;
+        prevRsw1 = rsw1;
+        prevRsw2 = rsw2;
+
+        totalCount++;
+    } while(pos >= 0 && pos <= maxTotal);
 
 }
 
 
-if (readBSW1() == 1) {
-    int count++;
-}
-if (readBSW2() == 1) {
-    int count++;
-}
-if (readGSW1() == 1) {
-    int count++;
-}
-if (readGSW2() == 1) {
-    int count++;
-}
-if (readRSW1() == 1) {
-    int count++;
-}
-if (readRSW2() == 1) {
-    int count++;
-}
+
