@@ -150,7 +150,7 @@ void configPins() {
     FIO0DIR |= (1<<4) | (1<<5) | (1<<10) | (1<<11) | (1<<9) | (1<<8) | (1<<7) | (1<<6) | (1<<0) | (1<<1) | (1<<18); // g1, g2, g3, g4, r1, r2, r3, r4, r5, r6, r7
 
     // read input switches
-    FIO0DIR &= ~(1<<24) & ~(1<<26) & ~(1<<2) & ~(1<<23); // bsw1, bsw2, rsw1, rsw2
+    FIO0DIR &= ~(1<<24) & ~(1<<17) & ~(1<<2) & ~(1<<26); // bsw1, bsw2, rsw1, rsw2
     FIO1DIR &= ~(1<<30) & ~(1<<31); // gsw1, gsw2
 
     // configure PINMODE - pull down (active high)
@@ -160,12 +160,14 @@ void configPins() {
           and add 1 to the PINMODE number
     */
     PINMODE1 &= ~(1<<16) & ~(1<<17); // blue sw1 (port 0, bits 16-17)
-    PINMODE1 &= ~(1<<20) & ~(1<<21); // blue sw2 (port 0, bits 20-21)
+    PINMODE0 &= ~(1<<2) & ~(1<<3); // blue sw2 (port 0, bits 20-21)
     PINMODE3 &= ~(1<<28) & ~(1<<29); // grn sw1 (port 1, bits 28-29)
     PINMODE3 &= ~(1<<30) & ~(1<<31); // grn sw2 (port 1, bits 30-31)
-    PINMODE1 &= ~(1<<20) & ~(1<<21); // red sw1 (port 0, bits 20-21)
-    PINMODE0 &= ~(1<<4) & ~(1<<5); // red sw2 (port 0, bits 4-5)
+    PINMODE1 &= ~(1<<20) & ~(1<<21); // red sw2 (port 0, bits 20-21)
+    PINMODE0 &= ~(1<<4) & ~(1<<5); // red sw1 (port 0, bits 4-5)
 }
+
+
 
 
 
@@ -179,6 +181,12 @@ int  main() {
     int gsw2 = 0;
     int rsw1 = 0;
     int rsw2 = 0;
+    int prebsw1;
+	int prebsw2;
+	int pregsw1;
+	int pregsw2;
+	int prersw1;
+	int prersw2;
 
     // set up input/output pins
     configPins();
@@ -204,6 +212,8 @@ int  main() {
         gsw2 = readGSW2();
         rsw1 = readRSW1();
         rsw2 = readRSW2();
+
+
 
         // when switch is pressed, increment count & turn off LED
         if (bsw1 == 1) {
@@ -340,6 +350,14 @@ int  main() {
 			}
 			wait(0.2);
         }
+
+		prebsw1 = bsw1;
+		prebsw2 = bsw2;
+		pregsw1 = gsw1;
+		pregsw2 = gsw2;
+		prersw1 = rsw1;
+		prersw2 = rsw2;
+
     } while(1);
 
 
