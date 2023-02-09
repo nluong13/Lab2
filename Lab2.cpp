@@ -151,7 +151,7 @@ void configPins() {
 
     // read input switches
     FIO0DIR &= ~(1<<24) & ~(1<<26) & ~(1<<2) & ~(1<<23); // bsw1, bsw2, rsw1, rsw2
-    FIO1DIR &= ~(1<<30) & ~(1<<31); // gsw 1, gsw 2
+    FIO1DIR &= ~(1<<30) & ~(1<<31); // gsw1, gsw2
 
     // configure PINMODE - pull down (active high)
     /* get PINMODE register & bit:
@@ -160,7 +160,7 @@ void configPins() {
           and add 1 to the PINMODE number
     */
     PINMODE1 &= ~(1<<16) & ~(1<<17); // blue sw1 (port 0, bits 16-17)
-    PINMODE1 &= ~(1<<18) & ~(1<<19); // blue sw2 (port 0, bits 18-19)
+    PINMODE1 &= ~(1<<20) & ~(1<<21); // blue sw2 (port 0, bits 20-21)
     PINMODE3 &= ~(1<<28) & ~(1<<29); // grn sw1 (port 1, bits 28-29)
     PINMODE3 &= ~(1<<30) & ~(1<<31); // grn sw2 (port 1, bits 30-31)
     PINMODE1 &= ~(1<<20) & ~(1<<21); // red sw1 (port 0, bits 20-21)
@@ -170,8 +170,7 @@ void configPins() {
 
 
 int  main() {
-
- 	int countBlu = 0;  // count of blue switch presses
+ 	int countBlu = 0; // count of blue switch presses
     int countGrn = 0; // count of green switch presses
     int countRed = 0; // count of red switch presses
     int bsw1 = 0;
@@ -181,16 +180,14 @@ int  main() {
     int rsw1 = 0;
     int rsw2 = 0;
 
-
     // set up input/output pins
-   configPins();
+    configPins();
 
     // start of game (all LEDs ON)
-
     startCon();
 
     do {
-
+        // when all LEDs are off, reset count and start a new game
     	if (countRed + countGrn + countBlu == 15) {
     		wait(2);
     		configPins();
@@ -198,8 +195,8 @@ int  main() {
     		countRed = 0;
     		countGrn = 0;
     		countBlu = 0;
-
     	}
+
         // read switch states once per loop
         bsw1 = readBSW1();
         bsw2 = readBSW2();
@@ -208,8 +205,10 @@ int  main() {
         rsw1 = readRSW1();
         rsw2 = readRSW2();
 
-        // when switch is pressed, increment count
+        // when switch is pressed, increment count & turn off LED
         if (bsw1 == 1) {
+            rsw1 = 0;
+            gsw1 = 0;
             countBlu++;
             	if (countBlu == 1) {
                     writeBLED1(0);
