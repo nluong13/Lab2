@@ -169,8 +169,6 @@ void configPins() {
 
 
 
-
-
 int  main() {
  	int countBlu = 0; // count of blue switch presses
     int countGrn = 0; // count of green switch presses
