@@ -154,11 +154,6 @@ void configPins() {
     FIO1DIR &= ~(1<<30) & ~(1<<31); // gsw1, gsw2
 
     // configure PINMODE - pull down (active high)
-    /* get PINMODE register & bit:
-        - Multiply port and bit numbers by 2
-        - If the resulting bit number exceeds 31, subtract 32 from it
-          and add 1 to the PINMODE number
-    */
     PINMODE1 &= ~(1<<16) & ~(1<<17); // blue sw1 (port 0, bits 16-17)
     PINMODE0 &= ~(1<<2) & ~(1<<3); // blue sw2 (port 0, bits 20-21)
     PINMODE3 &= ~(1<<28) & ~(1<<29); // grn sw1 (port 1, bits 28-29)
