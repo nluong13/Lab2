@@ -204,80 +204,118 @@ int  main() {
 
         // when switch is pressed, increment count & turn off LED
         if (bsw1 == 1 && (color == 1 || playerTurn != 1)) {
-            countBlu++;
-            if (countBlu == 1) writeBLED1(0);
-            if (countBlu == 2) writeBLED2(0);
-            if (countBlu == 3) writeBLED3(0);
-            if (countBlu >= 3) countBlu = 3;
-            wait(0.2);
-            color = 1;
-            playerTurn = 1;
+
+        	if (countBlu == 3) {
+        		playerTurn = 2;
+        	}
+        	else {
+        		countBlu++;
+				if (countBlu == 1) writeBLED1(0);
+				if (countBlu == 2) writeBLED2(0);
+				if (countBlu == 3) writeBLED3(0);
+				if (countBlu >= 3) countBlu = 3;
+				wait(0.2);
+				color = 1;
+				playerTurn = 1;
+        	}
+
         }
         if (bsw2 == 1 && (color == 1 || playerTurn != 2)) {
-            countBlu++;
-            if (countBlu == 1) writeBLED1(0);
-			if (countBlu == 2) writeBLED2(0);
-			if (countBlu == 3) writeBLED3(0);
-			if (countBlu >= 3) countBlu = 3;
-			wait(0.2);
-            color = 1;
-            playerTurn = 2;
+
+        	if (countBlu == 3) {
+        		playerTurn = 1;
+        	}
+        	else {
+        		countBlu++;
+				if (countBlu == 1) writeBLED1(0);
+				if (countBlu == 2) writeBLED2(0);
+				if (countBlu == 3) writeBLED3(0);
+				if (countBlu >= 3) countBlu = 3;
+				wait(0.2);
+				color = 1;
+				playerTurn = 2;
+        	}
+
         }
         if (gsw1 == 1  && (color == 2 || playerTurn != 1)) {
-            countGrn++;
-            if (countGrn == 1) writeGLED1(0);
-			if (countGrn == 2) writeGLED2(0);
-			if (countGrn == 3) writeGLED3(0);
-			if (countGrn == 4) writeGLED4(0);
-			if (countGrn == 5) writeGLED5(0);
-			if (countGrn >= 5) countGrn = 5;
-			wait(0.2);
-            color = 2;
-            playerTurn = 1;
+        	if (countGrn == 5) {
+        		playerTurn = 2;
+        	}
+        	else {
+        		countGrn++;
+				if (countGrn == 1) writeGLED1(0);
+				if (countGrn == 2) writeGLED2(0);
+				if (countGrn == 3) writeGLED3(0);
+				if (countGrn == 4) writeGLED4(0);
+				if (countGrn == 5) writeGLED5(0);
+				if (countGrn >= 5) countGrn = 5;
+				wait(0.2);
+				color = 2;
+				playerTurn = 1;
+        	}
+
         }
         if (gsw2 == 1 && (color == 2 || playerTurn != 2)) {
-            countGrn++;
-            if (countGrn == 1) writeGLED1(0);
-			if (countGrn == 2) writeGLED2(0);
-			if (countGrn == 3) writeGLED3(0);
-			if (countGrn == 4) writeGLED4(0);
-			if (countGrn == 5) writeGLED5(0);
-			if (countGrn >= 5) countGrn = 5;
-			wait(0.2);
-            color = 2;
-            playerTurn = 2;
+
+        	if (countGrn == 5) {
+				playerTurn = 1;
+			}
+        	else {
+        		countGrn++;
+				if (countGrn == 1) writeGLED1(0);
+				if (countGrn == 2) writeGLED2(0);
+				if (countGrn == 3) writeGLED3(0);
+				if (countGrn == 4) writeGLED4(0);
+				if (countGrn == 5) writeGLED5(0);
+				if (countGrn >= 5) countGrn = 5;
+				wait(0.2);
+				color = 2;
+				playerTurn = 2;
+        	}
+
         }
         if (rsw1 == 1 && (color == 3 || playerTurn != 1)) {
-            countRed++;
-            if (countRed == 1) writeRLED1(0);
-			if (countRed == 2) writeRLED2(0);
-			if (countRed == 3) writeRLED3(0);
-			if (countRed == 4) writeRLED4(0);
-			if (countRed == 5) writeRLED5(0);
-			if (countRed == 6) writeRLED6(0);
-			if (countRed == 7) writeRLED7(0);
-			if (countRed >= 7) countRed = 7;
-			wait(0.2);
-            color = 3;
-            playerTurn = 1;
+
+        	if (countRed == 7) {
+				playerTurn = 2;
+			}
+        	else {
+        		countRed++;
+				if (countRed == 1) writeRLED1(0);
+				if (countRed == 2) writeRLED2(0);
+				if (countRed == 3) writeRLED3(0);
+				if (countRed == 4) writeRLED4(0);
+				if (countRed == 5) writeRLED5(0);
+				if (countRed == 6) writeRLED6(0);
+				if (countRed == 7) writeRLED7(0);
+				if (countRed >= 7) countRed = 7;
+				wait(0.2);
+				color = 3;
+				playerTurn = 1;
+        	}
         }
         if (rsw2 == 1 && (color == 3 || playerTurn != 2)) {
-            countRed++;
-            if (countRed == 1) writeRLED1(0);
-			if (countRed == 2) writeRLED2(0);
-			if (countRed == 3) writeRLED3(0);
-			if (countRed == 4) writeRLED4(0);
-			if (countRed == 5) writeRLED5(0);
-			if (countRed == 6) writeRLED6(0);
-			if (countRed == 7) writeRLED7(0);
-			if (countRed >= 7) countRed = 7;
-			wait(0.2);
-            color = 3;
-            playerTurn = 2;
+        	if (countRed == 7) {
+				playerTurn = 1;
+			}
+        	else {
+        		countRed++;
+				if (countRed == 1) writeRLED1(0);
+				if (countRed == 2) writeRLED2(0);
+				if (countRed == 3) writeRLED3(0);
+				if (countRed == 4) writeRLED4(0);
+				if (countRed == 5) writeRLED5(0);
+				if (countRed == 6) writeRLED6(0);
+				if (countRed == 7) writeRLED7(0);
+				if (countRed >= 7) countRed = 7;
+				wait(0.2);
+				color = 3;
+				playerTurn = 2;
+        	}
+
         }
     } 
 
 
 
 }
-
