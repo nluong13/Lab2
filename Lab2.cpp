@@ -181,12 +181,8 @@ int  main() {
     int gsw2 = 0;
     int rsw1 = 0;
     int rsw2 = 0;
-    int prebsw1;
-	int prebsw2;
-	int pregsw1;
-	int pregsw2;
-	int prersw1;
-	int prersw2;
+    int playerTurn = 0; // 0: beginning of game, 1: player 1, 2: player 
+    int color; // 1: blue, 2: green, 3: red
 
     // set up input/output pins
     configPins();
@@ -194,7 +190,7 @@ int  main() {
     // start of game (all LEDs ON)
     startCon();
 
-    do {
+    while(1) {
         // when all LEDs are off, reset count and start a new game
     	if (countRed + countGrn + countBlu == 15) {
     		wait(2);
@@ -213,152 +209,80 @@ int  main() {
         rsw1 = readRSW1();
         rsw2 = readRSW2();
 
-
-
         // when switch is pressed, increment count & turn off LED
-        if (bsw1 == 1) {
-            rsw1 = 0;
-            gsw1 = 0;
+        if (bsw1 == 1 && (color == 1 || playerTurn != 1)) {
             countBlu++;
-            	if (countBlu == 1) {
-                    writeBLED1(0);
-            	}
-            	if (countBlu == 2) {
-            	    writeBLED2(0);
-            	}
-            	if (countBlu == 3) {
-					writeBLED3(0);
-				}
-            	if (countBlu >= 3) {
-            		countBlu = 3;
-            	}
-            	wait(0.2);
+            if (countBlu == 1) writeBLED1(0);
+            if (countBlu == 2) writeBLED2(0);
+            if (countBlu == 3) writeBLED3(0);
+            if (countBlu >= 3) countBlu = 3;
+            wait(0.2);
+            color = 1;
+            playerTurn = 1;
         }
-        if (bsw2 == 1) {
+        if (bsw2 == 1 && (color == 1 || playerTurn != 2)) {
             countBlu++;
-            if (countBlu == 1) {
-				writeBLED1(0);
-			}
-			if (countBlu == 2) {
-				writeBLED2(0);
-			}
-			if (countBlu == 3) {
-				writeBLED3(0);
-			}
-			if (countBlu >= 3) {
-			    countBlu = 3;
-			}
+            if (countBlu == 1) writeBLED1(0);
+			if (countBlu == 2) writeBLED2(0);
+			if (countBlu == 3) writeBLED3(0);
+			if (countBlu >= 3) countBlu = 3;
 			wait(0.2);
+            color = 1;
+            playerTurn = 2;
         }
-        if (gsw1 == 1) {
+        if (gsw1 == 1  && (color == 2 || playerTurn != 1)) {
             countGrn++;
-            if (countGrn == 1) {
-            	writeGLED1(0);
-			}
-			if (countGrn == 2) {
-				writeGLED2(0);
-			}
-			if (countGrn == 3) {
-				writeGLED3(0);
-			}
-			if (countGrn == 4) {
-				writeGLED4(0);
-			}
-			if (countGrn == 5) {
-				writeGLED5(0);
-			}
-			if (countGrn >= 5) {
-				countGrn = 5;
-			}
+            if (countGrn == 1) writeGLED1(0);
+			if (countGrn == 2) writeGLED2(0);
+			if (countGrn == 3) writeGLED3(0);
+			if (countGrn == 4) writeGLED4(0);
+			if (countGrn == 5) writeGLED5(0);
+			if (countGrn >= 5) countGrn = 5;
 			wait(0.2);
+            color = 2;
+            playerTurn = 1;
         }
-        if (gsw2 == 1) {
+        if (gsw2 == 1 && (color == 2 || playerTurn != 2)) {
             countGrn++;
-            if (countGrn == 1) {
-				writeGLED1(0);
-			}
-			if (countGrn == 2) {
-				writeGLED2(0);
-			}
-			if (countGrn == 3) {
-				writeGLED3(0);
-			}
-			if (countGrn == 4) {
-				writeGLED4(0);
-			}
-			if (countGrn == 5) {
-				writeGLED5(0);
-			}
-			if (countGrn >= 5) {
-				countGrn = 5;
-			}
+            if (countGrn == 1) writeGLED1(0);
+			if (countGrn == 2) writeGLED2(0);
+			if (countGrn == 3) writeGLED3(0);
+			if (countGrn == 4) writeGLED4(0);
+			if (countGrn == 5) writeGLED5(0);
+			if (countGrn >= 5) countGrn = 5;
 			wait(0.2);
+            color = 2;
+            playerTurn = 2;
         }
-        if (rsw1 == 1) {
+        if (rsw1 == 1 && (color == 3 || playerTurn != 1)) {
             countRed++;
-            if (countRed == 1) {
-				writeRLED1(0);
-			}
-			if (countRed == 2) {
-				writeRLED2(0);
-			}
-			if (countRed == 3) {
-				writeRLED3(0);
-			}
-			if (countRed == 4) {
-				writeRLED4(0);
-			}
-			if (countRed == 5) {
-				writeRLED5(0);
-			}
-			if (countRed == 6) {
-				writeRLED6(0);
-			}
-			if (countRed == 7) {
-				writeRLED7(0);
-			}
-			if (countRed >= 7) {
-				countRed = 7;
-			}
+            if (countRed == 1) writeRLED1(0);
+			if (countRed == 2) writeRLED2(0);
+			if (countRed == 3) writeRLED3(0);
+			if (countRed == 4) writeRLED4(0);
+			if (countRed == 5) writeRLED5(0);
+			if (countRed == 6) writeRLED6(0);
+			if (countRed == 7) writeRLED7(0);
+			if (countRed >= 7) countRed = 7;
 			wait(0.2);
+            color = 3;
+            playerTurn = 1;
         }
-        if (rsw2 == 1) {
+        if (rsw2 == 1 && (color == 3 || playerTurn != 2)) {
             countRed++;
-            if (countRed == 1) {
-				writeRLED1(0);
-			}
-			if (countRed == 2) {
-				writeRLED2(0);
-			}
-			if (countRed == 3) {
-				writeRLED3(0);
-			}
-			if (countRed == 4) {
-				writeRLED4(0);
-			}
-			if (countRed == 5) {
-				writeRLED5(0);
-			}
-			if (countRed == 6) {
-				writeRLED6(0);
-			}
-			if (countRed == 7) {
-				writeRLED7(0);
-			}
-			if (countRed >= 7) {
-				countRed = 7;
-			}
+            if (countRed == 1) writeRLED1(0);
+			if (countRed == 2) writeRLED2(0);
+			if (countRed == 3) writeRLED3(0);
+			if (countRed == 4) writeRLED4(0);
+			if (countRed == 5) writeRLED5(0);
+			if (countRed == 6) writeRLED6(0);
+			if (countRed == 7) writeRLED7(0);
+			if (countRed >= 7) countRed = 7;
 			wait(0.2);
+            color = 3;
+            playerTurn = 2;
         }
-
-		prebsw1 = bsw1;
-		prebsw2 = bsw2;
-		pregsw1 = gsw1;
-		pregsw2 = gsw2;
-		prersw1 = rsw1;
-		prersw2 = rsw2;
-
-    } while(1);
+    } 
 
 
 
